@@ -1,1 +1,2 @@
-com.haifan.common.security.GlobalExceptionHandler
+com.haifan.common.security.exceptionHandler.GlobalExceptionHandler
+com.haifan.common.security.service.TokenService

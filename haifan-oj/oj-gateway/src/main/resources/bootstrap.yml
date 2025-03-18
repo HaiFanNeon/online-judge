@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: oj-gateway
+  profiles:
+    active: local
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.190.132:8848
+        namespace: 49fad91a-ddfc-4d2d-9b17-b00c5cd81bb4
+      config:
+        server-addr: 192.168.190.132:8848
+        namespace: 49fad91a-ddfc-4d2d-9b17-b00c5cd81bb4
+        file-extension: yaml
