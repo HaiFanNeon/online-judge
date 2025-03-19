@@ -1,4 +1,4 @@
-package com.haifan.common.security.domain;
+package com.haifan.common.core.domin;
 
 
 import lombok.Data;

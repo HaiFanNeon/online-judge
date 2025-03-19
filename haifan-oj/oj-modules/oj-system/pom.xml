@@ -53,6 +53,12 @@
             <version>${oj-common-redis.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.haifan</groupId>
+            <artifactId>oj-common-mybatisplus</artifactId>
+            <version>${oj-common-mybatisplus.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

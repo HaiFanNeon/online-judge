@@ -1,5 +1,6 @@
-package com.haifan.common.security.untils;
+package com.haifan.common.core.untils;
 
+import com.haifan.common.core.constants.JwtConstants;
 import io.jsonwebtoken.*;
 import java.util.Map;
 
@@ -55,5 +56,20 @@ public class JwtUtils {
                 .setSigningKey(security) // 设置HMAC验证密钥
                 .parseClaimsJws(token)  // 解析并验证签名
                 .getBody(); // 获取payload数据
+    }
+
+    public static String getUserKey(Claims claims) {
+        return toStr(claims.get(JwtConstants.LOGIN_USER_KEY));
+    }
+
+    private static String toStr(Object value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toString();
+    }
+
+    public static String getUserId(Claims claims) {
+        return toStr(claims.get(JwtConstants.LOGIN_USER_ID));
     }
 }

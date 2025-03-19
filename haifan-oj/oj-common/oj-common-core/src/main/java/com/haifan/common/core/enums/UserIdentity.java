@@ -11,7 +11,7 @@ public enum UserIdentity {
         this.des = des;
     }
 
-    private int value;
+    private Integer value;
 
     private String des;
 }

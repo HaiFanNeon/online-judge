@@ -1,2 +1,4 @@
 com.haifan.common.security.exceptionHandler.GlobalExceptionHandler
 com.haifan.common.security.service.TokenService
+com.haifan.common.security.config.WebMvcConfig
+com.haifan.common.security.interceptor.TokenInterceptor
