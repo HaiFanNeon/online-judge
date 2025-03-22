@@ -9,5 +9,5 @@ public class SysUserVO {
     @Schema(description = "用户账号")
     private String userAccount;
     @Schema(description = "用户昵称")
-    private String nick;
+    private String nickName;
 }

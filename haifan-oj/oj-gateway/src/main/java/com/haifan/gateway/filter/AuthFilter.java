@@ -107,11 +107,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
         // 接口权限验证（根据URL前缀判断身份）
         if (url.contains(HttpConstants.SYSTEM_URL_PREFIX) &&  // 系统管理接口
-                !UserIdentity.ADMIN.getValue().equals(user.getIndentity())) {  // 拼写错误：应为getIdentity()
+                !UserIdentity.ADMIN.getValue().equals(user.getIdentity())) {
             return unauthorizedResponse(exchange, "无管理员权限");
         }
         if (url.contains(HttpConstants.FRIEND_URL_PREFIX) &&   // 好友相关接口
-                !UserIdentity.ORDINARY.getValue().equals(user.getIndentity())) {
+                !UserIdentity.ORDINARY.getValue().equals(user.getIdentity())) {
             return unauthorizedResponse(exchange, "非普通用户权限");
         }
 

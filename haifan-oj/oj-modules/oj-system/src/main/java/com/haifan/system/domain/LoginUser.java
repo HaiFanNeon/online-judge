@@ -10,6 +10,6 @@ import lombok.experimental.Accessors;
 public class LoginUser {
 
     @Schema(name = "用户身份，1为普通用户，2表示管理员")
-    private Integer indentity;
+    private Integer identity;
 
 }

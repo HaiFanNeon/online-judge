@@ -1,8 +1,8 @@
 package com.haifan.system.controller;
 
-
 import com.haifan.common.core.controller.BaseController;
 import com.haifan.common.core.domin.R;
+import com.haifan.common.core.domin.vo.LoginUserVO;
 import com.haifan.system.domain.dto.LoginDTO;
 import com.haifan.system.domain.dto.SysUserSaveDTO;
 import com.haifan.system.domain.vo.SysUserVO;
@@ -13,8 +13,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nonnull;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "管理员接口")
 @Slf4j
 @RestController
-@RequestMapping("/sysuser")
+@RequestMapping("/sysUser")
 public class SysUserController extends BaseController {
 
     @Autowired
@@ -39,12 +38,29 @@ public class SysUserController extends BaseController {
 
     @PostMapping("/login")
     @Operation(summary = "管理员登录", description = "根据账号密码进行管理员登录")
+    @Parameters(
+            @Parameter(name = "loginDTO", in = ParameterIn.PATH, description = "登录用户的信息")
+    )
     @ApiResponse(responseCode = "1000", description = "操作成功")
     @ApiResponse(responseCode = "2000", description = "服务繁忙请稍后重试")
     @ApiResponse(responseCode = "3102", description = "用户不存在")
     @ApiResponse(responseCode = "3103", description = "用户名或密码错误")
     public R<String> login(@Validated @RequestBody LoginDTO loginDTO) {
         return sysUserService.login(loginDTO.getUserAccount(), loginDTO.getPassword());
+    }
+
+    @GetMapping("/info")
+    @Operation(summary = "用户信息", description = "根据token查询当前用户信息")
+    @Parameters(
+            @Parameter(name = "token", in = ParameterIn.HEADER, description = "获取请求头中的token")
+    )
+    @ApiResponse(responseCode = "1000", description = "操作成功")
+    @ApiResponse(responseCode = "2000", description = "服务繁忙请稍后重试")
+    @ApiResponse(responseCode = "3102", description = "用户不存在")
+    @ApiResponse(responseCode = "3103", description = "用户名或密码错误")
+    public R<LoginUserVO> info(@RequestHeader("Authorization") String token) {
+        LoginUserVO loginUserVO = sysUserService.info(token);
+        return loginUserVO == null? R.fail() : R.ok(loginUserVO);
     }
 
     @Operation(summary = "新增管理员", description = "根据提供的信息新增管理员")

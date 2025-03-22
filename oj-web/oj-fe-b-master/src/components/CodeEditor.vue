@@ -1,13 +1,12 @@
 <template>
-  <div ref="editorform" class="ace-editor">
-  </div>
+  <div ref="editorform" class="ace-editor"></div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue"
-import ace from "ace-builds"
-import "ace-builds/src-noconflict/mode-java"
-import "ace-builds/src-noconflict/theme-eclipse"
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import ace from "ace-builds";
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/theme-eclipse";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 // 定义选项
@@ -20,7 +19,7 @@ const options = {
 };
 // 创建响应式引用
 let editor = null;
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(["update:value"]);
 const editorform = ref(null);
 // 初始化编辑器
 onMounted(() => {
@@ -28,9 +27,9 @@ onMounted(() => {
   editor.setOptions({
     enableBasicAutocompletion: true,
   });
-  editor.getSession().on('change', () => {
+  editor.getSession().on("change", () => {
     // 当编辑器内容变化时，触发自定义事件并传递编辑器的内容
-    emit('update:value', editor.getValue());
+    emit("update:value", editor.getValue());
   });
 });
 
@@ -43,14 +42,12 @@ onBeforeUnmount(() => {
 });
 
 function setAceCode(content) {
-  editor.setValue(content)
+  editor.setValue(content);
 }
 
 defineExpose({
-  setAceCode
-})
-
-
+  setAceCode,
+});
 </script>
 
 <style lang="scss" scoped>

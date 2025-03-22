@@ -5,7 +5,9 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
+import com.haifan.common.core.domin.LoginUser;
 import com.haifan.common.core.domin.R;
+import com.haifan.common.core.domin.vo.LoginUserVO;
 import com.haifan.common.core.enums.ResultCode;
 import com.haifan.common.core.enums.UserIdentity;
 
@@ -54,13 +56,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public R<String> login(String userAccount, String password) {
         // 通过账号在数据库中查询对应管理员的信息
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.select(SysUser::getUserId, SysUser::getPassword).eq(SysUser::getUserAccount, userAccount);
+        queryWrapper.select(SysUser::getUserId, SysUser::getNickName,SysUser::getPassword).eq(SysUser::getUserAccount, userAccount);
         SysUser sysUser = sysUserMapper.selectOne(queryWrapper);
         // 判断用户是否存在，密码是否正确，以及用户名或者密码是否错误
         if (sysUser == null) {
             return R.fail(ResultCode.FAILED_USER_NOT_EXISTS);
         } else if (BCryptUtils.matchesPassword(password, sysUser.getPassword())) {
-            String token = tokenService.createToken(sysUser.getUserId(), secret, UserIdentity.ADMIN.getValue());
+            String token = tokenService.createToken(sysUser.getUserId(), secret, UserIdentity.ADMIN.getValue(), sysUser.getNickName());
             return R.ok(token);
         }
         return R.fail(ResultCode.FAILED_LOGIN);
@@ -79,5 +81,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        sysUser.setCreateBy(100L); // 获取当前用户用户id， 如何获取当前调用接口的用户id呢？
         int i = sysUserMapper.insert(sysUser);
         return i;
+    }
+
+    @Override
+    public LoginUserVO info(String token) {
+
+        LoginUser loginUser = tokenService.getLoginUser(token, secret);
+        if (loginUser == null) {
+            log.info("loginUser 为空");
+            return null;
+        }
+
+        LoginUserVO loginUserVO = BeanUtil.copyProperties(loginUser, LoginUserVO.class);
+        log.info(loginUserVO.toString());
+        return loginUserVO;
     }
 }

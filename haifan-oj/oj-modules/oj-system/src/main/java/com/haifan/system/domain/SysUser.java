@@ -30,6 +30,8 @@ public class SysUser extends BaseEntity implements Serializable{
 
     private String userAccount;
 
+    private String nickName;
+
     private String password;
 
 

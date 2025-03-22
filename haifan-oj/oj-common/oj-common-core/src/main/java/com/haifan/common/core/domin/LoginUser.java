@@ -5,10 +5,9 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
-
 @Accessors(chain = true)
 public class LoginUser {
 
-    private Integer indentity;
-
+    private Integer identity;
+    private String nickName;
 }

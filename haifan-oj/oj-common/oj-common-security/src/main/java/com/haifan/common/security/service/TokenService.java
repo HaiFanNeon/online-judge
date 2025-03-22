@@ -22,7 +22,7 @@ public class TokenService {
     @Autowired
     private RedisService redisService;
 
-    public String createToken(Long userId, String secret, Integer identity) {
+    public String createToken(Long userId, String secret, Integer identity,String nickName) {
         String userKey = UUID.fastUUID().toString();
         // 根据userId生成用户token
         Map<String, Object> claims = new HashMap<>();
@@ -33,7 +33,7 @@ public class TokenService {
         // key 必须保证唯一性， 便于维护 统一前缀: logintoken:userId(根据雪花算法生成的字段) / logintoken:糊涂工具包中的UUID
         // String userKey = UUID.fastUUID().toString(); 提到上面，加入到token中，根据token中的信息可以查到redis中存储的信息，以及是否过期
         String key = getTokenKey(userKey);
-        LoginUser loginUser = new LoginUser().setIndentity(identity);
+        LoginUser loginUser = new LoginUser().setIdentity(identity).setNickName(nickName);
         // 过期时间设置为 720分钟
         redisService.setCacheObject(key, loginUser, CacheConstants.EXP, TimeUnit.MINUTES);
 
@@ -46,17 +46,8 @@ public class TokenService {
      * @param secret
      */
     public void extendToken(String token, String secret) {
-        Claims claims = null;
-        try {
-            claims = JwtUtils.parseToken(token, secret); // 从令牌中获取信息，解析payload中信息,存储唯一标识信息
-            if (claims == null) {
-                return;
-            }
-        } catch (Exception e) {
-            log.error("token: {}, 解析token出现异常，",token,e);
-        }
-
-        String userKey = JwtUtils.getUserKey(claims); // 获取jwt中的userKey
+       String userKey =  getUserKey(token, secret);
+//        String userKey = JwtUtils.getUserKey(claims); // 获取jwt中的userKey
         String tokenKey = getTokenKey(userKey); // redis中存储的key
 
         Long expire = redisService.getExpire(tokenKey, TimeUnit.MINUTES);
@@ -71,4 +62,32 @@ public class TokenService {
         return CacheConstants.LOGIN_TOKEN_KEY + userKey;
     }
 
+    private String getUserKey(String token, String secret) {
+        Claims claims = null;
+        try {
+            claims = JwtUtils.parseToken(token, secret); // 从令牌中获取信息，解析payload中信息,存储唯一标识信息
+            if (claims == null) {
+                return null;
+            }
+        } catch (Exception e) {
+            log.error("token: {}, 解析token出现异常，",token,e);
+        }
+
+        return JwtUtils.getUserKey(claims);
+    }
+
+    /**
+     * 获取登录对象在redis中存储的key
+     * @param token
+     * @param secret
+     * @return
+     */
+    public LoginUser getLoginUser(String token, String secret) {
+        String userKey = getUserKey(token, secret);
+        if (userKey == null) {
+            return null;
+        }
+        return redisService.getCacheObject(getTokenKey(userKey), LoginUser.class);
+
+    }
 }
