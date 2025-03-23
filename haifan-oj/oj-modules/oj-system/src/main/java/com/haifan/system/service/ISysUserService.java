@@ -3,8 +3,8 @@ package com.haifan.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.haifan.common.core.domin.R;
 import com.haifan.common.core.domin.vo.LoginUserVO;
-import com.haifan.system.domain.SysUser;
-import com.haifan.system.domain.dto.SysUserSaveDTO;
+import com.haifan.system.domain.sysuser.SysUser;
+import com.haifan.system.domain.sysuser.dto.SysUserSaveDTO;
 
 /**
  * <p>
@@ -22,4 +22,6 @@ public interface ISysUserService extends IService<SysUser> {
     Integer add(SysUserSaveDTO sysUserSaveDTO);
 
     LoginUserVO info(String token);
+
+    void logout(String token);
 }

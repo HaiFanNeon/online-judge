@@ -2,7 +2,7 @@ package com.haifan.system.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.haifan.system.domain.SysUser;
+import com.haifan.system.domain.sysuser.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

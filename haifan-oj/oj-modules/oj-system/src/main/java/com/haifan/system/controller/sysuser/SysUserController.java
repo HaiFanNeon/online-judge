@@ -1,11 +1,13 @@
-package com.haifan.system.controller;
+package com.haifan.system.controller.sysuser;
 
+import cn.hutool.core.util.StrUtil;
+import com.haifan.common.core.constants.HttpConstants;
 import com.haifan.common.core.controller.BaseController;
 import com.haifan.common.core.domin.R;
 import com.haifan.common.core.domin.vo.LoginUserVO;
-import com.haifan.system.domain.dto.LoginDTO;
-import com.haifan.system.domain.dto.SysUserSaveDTO;
-import com.haifan.system.domain.vo.SysUserVO;
+import com.haifan.system.domain.sysuser.dto.LoginDTO;
+import com.haifan.system.domain.sysuser.dto.SysUserSaveDTO;
+import com.haifan.system.domain.sysuser.vo.SysUserVO;
 import com.haifan.system.service.ISysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -49,6 +51,22 @@ public class SysUserController extends BaseController {
         return sysUserService.login(loginDTO.getUserAccount(), loginDTO.getPassword());
     }
 
+
+    @DeleteMapping("/logout")
+    @Operation(summary = "管理员退出", description = "解析token，获取到当前用户信息，然后将redis中存储的登录信息删除")
+    @Parameters(
+            @Parameter(name = "token", in = ParameterIn.HEADER, description = "获取请求头中的token")
+    )
+    @ApiResponse(responseCode = "1000", description = "操作成功")
+    @ApiResponse(responseCode = "2000", description = "服务繁忙请稍后重试")
+    public R logout(@RequestHeader("Authorization") String token) {
+        if (StrUtil.isNotEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
+        sysUserService.logout(token);
+        return R.ok();
+    }
+
     @GetMapping("/info")
     @Operation(summary = "用户信息", description = "根据token查询当前用户信息")
     @Parameters(
@@ -59,6 +77,9 @@ public class SysUserController extends BaseController {
     @ApiResponse(responseCode = "3102", description = "用户不存在")
     @ApiResponse(responseCode = "3103", description = "用户名或密码错误")
     public R<LoginUserVO> info(@RequestHeader("Authorization") String token) {
+        if (!StrUtil.isEmpty(token) && token.startsWith(HttpConstants.PREFIX)) {
+            token = token.replaceFirst(HttpConstants.PREFIX, StrUtil.EMPTY);
+        }
         LoginUserVO loginUserVO = sysUserService.info(token);
         return loginUserVO == null? R.fail() : R.ok(loginUserVO);
     }

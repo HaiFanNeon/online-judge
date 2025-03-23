@@ -1,4 +1,4 @@
-package com.haifan.system.domain.dto;
+package com.haifan.system.domain.sysuser.dto;
 
 import com.haifan.common.core.domin.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;

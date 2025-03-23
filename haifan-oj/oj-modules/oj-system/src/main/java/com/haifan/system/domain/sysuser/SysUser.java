@@ -1,4 +1,4 @@
-package com.haifan.system.domain;
+package com.haifan.system.domain.sysuser;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -20,7 +20,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-
 @TableName("tb_sys_user")
 public class SysUser extends BaseEntity implements Serializable{
     private static final long serialVersionUID = 1L;

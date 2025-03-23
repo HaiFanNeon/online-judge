@@ -14,8 +14,8 @@ import com.haifan.common.core.enums.UserIdentity;
 import com.haifan.common.security.exceptionHandler.ServiceException;
 import com.haifan.common.security.service.TokenService;
 
-import com.haifan.system.domain.SysUser;
-import com.haifan.system.domain.dto.SysUserSaveDTO;
+import com.haifan.system.domain.sysuser.SysUser;
+import com.haifan.system.domain.sysuser.dto.SysUserSaveDTO;
 import com.haifan.system.mapper.SysUserMapper;
 import com.haifan.system.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -95,5 +95,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         LoginUserVO loginUserVO = BeanUtil.copyProperties(loginUser, LoginUserVO.class);
         log.info(loginUserVO.toString());
         return loginUserVO;
+    }
+
+    @Override
+    public void logout(String token) {
+        Boolean aBoolean = tokenService.deleteToken(token, secret);
+        if (!aBoolean) {
+            throw new ServiceException("业务异常");
+        }
+        log.info("退出成功");
     }
 }

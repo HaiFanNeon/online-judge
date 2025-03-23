@@ -1,7 +1,7 @@
 package com.haifan.system.test;
 
 import com.haifan.common.redis.service.RedisService;
-import com.haifan.system.domain.SysUser;
+import com.haifan.system.domain.sysuser.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

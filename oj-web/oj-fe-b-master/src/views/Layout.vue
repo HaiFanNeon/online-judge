@@ -3,9 +3,7 @@
     <el-header class="el-header">
       <el-dropdown>
         <span class="el-dropdown__box">
-          <div>
-            <strong>当前用户：</strong>{{ loginUser.nickName }}
-          </div>
+          <div><strong>当前用户：</strong>{{ loginUser.nickName }}</div>
           <el-icon>
             <ArrowDownBold />
           </el-icon>
@@ -13,7 +11,9 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="logout" :icon="SwitchButton">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="logout" :icon="SwitchButton"
+              >退出登录</el-dropdown-item
+            >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -47,7 +47,6 @@
         <RouterView />
       </div>
     </el-main>
-
   </el-container>
 </template>
 
@@ -56,43 +55,36 @@ import {
   Management,
   ArrowDownBold,
   Lock,
-  SwitchButton
-} from '@element-plus/icons-vue'
-import { reactive } from 'vue'
-import router from '@/router'
-import { getUserInfoService,logoutService } from '@/apis/suser'
-import { removeToken } from '@/utils/cookie'
+  SwitchButton,
+} from "@element-plus/icons-vue";
+import { reactive } from "vue";
+import router from "@/router";
+import { getUserInfoService, logoutService } from "@/apis/suser";
+import { removeToken } from "@/utils/cookie";
 
 const loginUser = reactive({
-  nickName: ''
-})
+  nickName: "",
+});
 
 async function getUserInfo() {
-  const userInfo = await getUserInfoService()
-  loginUser.nickName = userInfo.data.nickName
+  const userInfo = await getUserInfoService();
+  loginUser.nickName = userInfo.data.nickName;
 }
-getUserInfo()
+getUserInfo();
 
 async function logout() {
-  await ElMessageBox.confirm(
-    '确认退出',  
-    '温馨提示',
-    {
-      confirmButtonText: '确认',
-      cancelButtonText: '退出',
-      type: 'warning',
-    }
-  )
+  await ElMessageBox.confirm("确认退出", "温馨提示", {
+    confirmButtonText: "确认",
+    cancelButtonText: "退出",
+    type: "warning",
+  });
   // try {
   // }catch {
   // }
-  await logoutService()
-  removeToken()
-  router.push("/oj/login")
+  await logoutService();
+  removeToken();
+  router.push("/oj/login");
 }
-
-
-
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,4 @@
-package com.haifan.system.domain.vo;
+package com.haifan.system.domain.sysuser.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
