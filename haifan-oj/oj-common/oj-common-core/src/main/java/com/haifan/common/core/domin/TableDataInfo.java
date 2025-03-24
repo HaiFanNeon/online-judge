@@ -61,7 +61,7 @@ public class TableDataInfo {
      * @param total 数据总数
      * @return TableDataInfo 实例，包含传入的数据列表和总数，状态码和消息为成功
      */
-    public static TableDataInfo success(List<?> list, int total) {
+    public static TableDataInfo success(List<?> list, long total) {
         TableDataInfo tableDataInfo = new TableDataInfo();
         tableDataInfo.setCode(ResultCode.SUCCESS.getCode());
         tableDataInfo.setRows(list);

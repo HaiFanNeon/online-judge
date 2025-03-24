@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class QuestionVO {
 
     @Schema(name = "题目id")
-    private Long questionId;
+    private String questionId;
     @Schema(name = "题目标题")
     private String title;
     @Schema(name = "题目难度1:简单  2：中等 3：困难")

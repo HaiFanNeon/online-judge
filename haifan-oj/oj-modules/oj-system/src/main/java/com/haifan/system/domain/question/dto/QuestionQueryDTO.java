@@ -1,12 +1,15 @@
 package com.haifan.system.domain.question.dto;
 
 
+import com.haifan.common.core.domin.dto.PageQueryDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Schema(name = "查询对象")
-public class QuestionQueryDTO {
+public class QuestionQueryDTO extends PageQueryDTO {
 
     @Schema(name = "题目难度")
     private Integer difficulty;
@@ -14,8 +17,5 @@ public class QuestionQueryDTO {
     @Schema(name = "题目标题")
     private String title;
 
-    @Schema(name = "分页大小")
-    private Integer pageSize = 10;
-    @Schema(name = "页数")
-    private Integer pageNum = 1;
+
 }
