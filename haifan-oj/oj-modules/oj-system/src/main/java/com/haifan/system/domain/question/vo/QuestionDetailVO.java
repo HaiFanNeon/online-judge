@@ -6,6 +6,10 @@ import lombok.Data;
 
 @Data
 public class QuestionDetailVO {
+
+    @Schema(name = "题id")
+    private String questionId;
+
     @Schema(name = "题目标题")
     private String title;
 

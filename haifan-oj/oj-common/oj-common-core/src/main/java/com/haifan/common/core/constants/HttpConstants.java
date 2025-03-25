@@ -17,4 +17,8 @@ public class HttpConstants {
      * 令牌前缀
      */
     public static final String PREFIX = "Bearer ";
+
+    public static final String DATE_TIME_PATTER = "yyyy-MM-dd HH:mm:ss";
+
+    public static final String DATE_PATTERN = "yyy-MM-dd";
 }
