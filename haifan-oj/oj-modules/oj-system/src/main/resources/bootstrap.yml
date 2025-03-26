@@ -12,6 +12,11 @@ spring:
         namespace: 49fad91a-ddfc-4d2d-9b17-b00c5cd81bb4
         server-addr: 192.168.190.132:8848
         file-extension: yaml
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
+
 
 
 #  datasource:

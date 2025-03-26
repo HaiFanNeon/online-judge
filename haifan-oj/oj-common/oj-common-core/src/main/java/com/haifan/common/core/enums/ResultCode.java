@@ -23,8 +23,12 @@ public enum ResultCode {
     FAILED_USER_NOT_EXISTS              (3102, "用户不存在"),
     FAILED_LOGIN                        (3103, "用户名或密码错误"),
     FAILED_USER_BANNED                  (3104, "您已被列入黑名单, 请联系管理员."),
+    FAILED_USER_PHONE                   (3105, "您输入的手机号有误"),
     EXAM_QUESTION_NOT_EXISTS            (4000, "竞赛中的题目不存在"),
-    EXAM_QUESTION_IS_NULL               (4001, "竞赛中的题目为空");
+    EXAM_QUESTION_IS_NULL               (4001, "竞赛中的题目为空"),
+    EXAM_START                          (4002, "竞赛已经发布，不能修改题目");
+
+
     /**
      * 状态码
      */
